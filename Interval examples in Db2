@@ -1,0 +1,7 @@
+Intervals allow modelling a period b/w two dates/timestamps/time. Intervals in Db2 behave like decimal durations. 
+You can read more about durations in https://www.ibm.com/support/knowledgecenter/en/SSEPGG_11.1.0/com.ibm.db2.luw.sql.ref.doc/doc/r0023457.html
+
+Few things to keep in mind while dealing with durations. Arthematic operations cannot mix durations of different kind. Durations can be
+date/time or timestamp durations and we cannot add a date duration to a time duration. Even though mathematically the addition
+is correct the resultant duration value is incorrect. 
+
