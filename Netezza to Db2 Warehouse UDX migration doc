@@ -1,0 +1,21 @@
+In Netezza UDX were deployed using nzudxcompile. The below command would compile and register the cube.cpp as a function CUBE in Netezza.
+
+nzudxcompile cube.cpp --sig "Cube(int4)" --return INT8 --class Cube --user myuser --pw password --db mydb
+
+
+However, In Db2 Warehouse , particularly on Db2 Warehouse on Cloud this done differently. The reason being there is no direct access
+to loading files and invoking the compiler on this platform. Instead we provide CLPPLUS based IDA commands which can compile and register
+the UDX on Db2 Warehouse.
+
+To achieve the same in Db2 Warehouse/IIAS/Db2 Warehouse on Cloud you can follow the below commands.
+
+>tar cvf cube.tar cube.cpp
+>ida deployudx source cube.tar proj udxproj sig cube(int) return int fenced yes det yes nullcall yes 
+  parallel yes class Cube
+  
+  The above ida command pushes the file to the connected instance. Compiles it. Deploys the UDX binary files in the appropriate location
+  on the instance and registers the UDX on the database.
+  
+  Once this command is successfully complete, users can run this UDX.
+  
+  >select cube(c1) from T1
